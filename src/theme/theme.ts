@@ -1,11 +1,13 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 
 import greyColor from '@material-ui/core/colors/grey';
-import deepPurple from '@material-ui/core/colors/deepPurple';
+import teal from '@material-ui/core/colors/teal';
 
 declare module '@material-ui/core/styles/createMuiTheme' {
   interface Theme {
     transition: string;
+    marginFromMainNav: string;
+    marginFromMainNavMobile: string;
     colors: {
       textColors: {
         dark: string;
@@ -25,6 +27,8 @@ declare module '@material-ui/core/styles/createMuiTheme' {
   // allow configuration using `createMuiTheme`
   interface ThemeOptions {
     transition?: string;
+    marginFromMainNav?: string;
+    marginFromMainNavMobile?: string;
     colors?: {
       textColors?: {
         dark?: string;
@@ -45,20 +49,36 @@ declare module '@material-ui/core/styles/createMuiTheme' {
 
 const theme = createMuiTheme({
   transition: 'all .2s ease',
+  marginFromMainNav: '125px',
+  marginFromMainNavMobile: '60px',
   colors: {
     textColors: {
       dark: greyColor[50],
       light: greyColor[800],
-      brand: deepPurple.A400,
+      brand: teal.A400,
     },
     paperColors: {
       light: '#ffffff',
-      dark: deepPurple.A400,
+      dark: teal.A400,
     },
     backgroundColors: {
       light: '#ffffff',
-      dark: deepPurple[900],
+      dark: teal[800],
     },
+  },
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
   },
 });
 
