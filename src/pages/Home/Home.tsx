@@ -8,6 +8,7 @@ import {
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
+import Fade from '@material-ui/core/Fade';
 import GotoIcon from '@material-ui/icons/KeyboardArrowRight';
 
 const useStyles = makeStyles((theme: AugmentedTheme) =>
@@ -67,50 +68,52 @@ const Home = () => {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Typography
-        className={classes.pageTitle}
-        variant="h2"
-        component="div"
-        noWrap
-      >
-        Cool React
-      </Typography>
-      <Typography
-        className={classes.pageSubtitle}
-        variant="subtitle1"
-        component="div"
-        gutterBottom
-      >
-        Cool component and hook based library for your react app.
-      </Typography>
-      <img className={classes.bigLogo} src="../images/cool-react.png" alt="" />
-      <Grid container className={classes.introBtnsContainer} spacing={2}>
-        <Grid className={classes.introBtnItem} item xs={12} sm={6}>
-          <Link className={classes.introLink} to="/tutorial/get-started">
-            <Button
-              className={classes.getStartedBtn}
-              disableElevation
-              fullWidth
-            >
-              Get Started
-            </Button>
-          </Link>
+    <Fade in timeout={500}>
+      <div className={classes.root}>
+        <Typography
+          className={classes.pageTitle}
+          variant="h2"
+          component="div"
+          noWrap
+        >
+          Cool React
+        </Typography>
+        <Typography
+          className={classes.pageSubtitle}
+          variant="subtitle1"
+          component="div"
+          gutterBottom
+        >
+          Cool component and hook based library for your react app.
+        </Typography>
+        <img className={classes.bigLogo} src="../images/cool-react.png" alt="" />
+        <Grid container className={classes.introBtnsContainer} spacing={2}>
+          <Grid className={classes.introBtnItem} item xs={12} sm={6}>
+            <Link className={classes.introLink} to="/tutorial/get-started">
+              <Button
+                className={classes.getStartedBtn}
+                disableElevation
+                fullWidth
+              >
+                Get Started
+              </Button>
+            </Link>
+          </Grid>
+          <Grid className={classes.introBtnItem} item xs={12} sm={6}>
+            <Link className={classes.introLink} to="/docs">
+              <Button
+                endIcon={<GotoIcon />}
+                className={classes.docsBtn}
+                disableElevation
+                fullWidth
+              >
+                Documentation
+              </Button>
+            </Link>
+          </Grid>
         </Grid>
-        <Grid className={classes.introBtnItem} item xs={12} sm={6}>
-          <Link className={classes.introLink} to="/docs">
-            <Button
-              endIcon={<GotoIcon />}
-              className={classes.docsBtn}
-              disableElevation
-              fullWidth
-            >
-              Documentation
-            </Button>
-          </Link>
-        </Grid>
-      </Grid>
-    </div>
+      </div>
+    </Fade>
   );
 };
 

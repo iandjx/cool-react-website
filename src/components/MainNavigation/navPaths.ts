@@ -1,9 +1,11 @@
-import Home from '../../pages/Home/Home';
-import Docs from '../../pages/Docs/Docs';
-import Tutorial from '../../pages/Tutorial/Tutorial';
+import React, { LazyExoticComponent } from 'react';
+
+const Home = React.lazy(() => import('../../pages/Home/Home'));
+const Docs = React.lazy(() => import('../../pages/Docs/Docs'));
+const Tutorial = React.lazy(() => import('../../pages/Tutorial/Tutorial'));
 
 export type navPathType = {
-  component: () => JSX.Element | null;
+  component?: LazyExoticComponent<() => JSX.Element>;
   path: string;
   title: string;
 };
@@ -29,7 +31,6 @@ const navPaths: navPathsType = {
     title: 'Tutorial',
   },
   github: {
-    component: () => null,
     path: 'https://github.com/smashboy/cool-react',
     title: 'Github',
   },

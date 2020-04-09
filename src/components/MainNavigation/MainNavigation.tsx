@@ -129,7 +129,7 @@ const MainNanLink = (props: {
       <GithubIcon />
     ) : null;
 
-  if (route.component()) {
+  if (route.component) {
     return (
       <NavLink
         activeClassName={classes.activeNavButton}
