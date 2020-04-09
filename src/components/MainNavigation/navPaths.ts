@@ -3,7 +3,7 @@ import Docs from '../../pages/Docs/Docs';
 import Tutorial from '../../pages/Tutorial/Tutorial';
 
 export type navPathType = {
-  component: () => JSX.Element;
+  component: () => JSX.Element | null;
   path: string;
   title: string;
 };
@@ -27,6 +27,11 @@ const navPaths: navPathsType = {
     component: Tutorial,
     path: '/tutorial',
     title: 'Tutorial',
+  },
+  github: {
+    component: () => null,
+    path: 'https://github.com/smashboy/cool-react',
+    title: 'Github',
   },
 };
 

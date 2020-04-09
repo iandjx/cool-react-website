@@ -11,14 +11,18 @@ const App = () => {
       <Router>
         <MainNavigation />
         <Switch>
-          {Object.keys(navPaths).map(key => (
-            <Route
-              key={key}
-              path={navPaths[key].path}
-              component={navPaths[key].component}
-              exact
-            />
-          ))}
+          {Object.keys(navPaths).map(key => {
+            if (navPaths[key].component) {
+              return (
+                <Route
+                  key={key}
+                  path={navPaths[key].path}
+                  component={navPaths[key].component}
+                  exact
+                />
+              );
+            } else return null;
+          })}
         </Switch>
       </Router>
     </ThemeProvider>

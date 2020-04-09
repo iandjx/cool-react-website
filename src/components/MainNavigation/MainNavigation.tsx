@@ -14,6 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import HomeIcon from '@material-ui/icons/Home';
 import TutorialIcon from '@material-ui/icons/School';
+import GithubIcon from '@material-ui/icons/GitHub';
 import DocsIcon from '@material-ui/icons/Description';
 import Avatar from '@material-ui/core/Avatar';
 import navPaths, { navPathType } from './navPaths';
@@ -33,12 +34,18 @@ const useStyles = makeStyles((theme: AugmentedTheme) =>
       },
     },
     navLinksGroup: {
-      margin: theme.spacing(1),
+      margin: theme.spacing(2),
+      marginLeft: '120px',
       flexGrow: 1,
       display: 'inline-flex',
+      justifyContent: 'center',
       [theme.breakpoints.down('sm')]: {
         display: 'none',
       },
+    },
+    navLink: {
+      textDecoration: 'none',
+      margin: '0 20px',
     },
     activeNavButton: {
       '& button': {
@@ -108,29 +115,48 @@ const StyledNavButton = withStyles((theme: AugmentedTheme) => ({
 const MainNanLink = (props: {
   route: navPathType;
   classes: Record<string, string>;
-}) => (
-  <NavLink
-    activeClassName={props.classes.activeNavButton}
-    style={{ textDecoration: 'none' }}
-    to={props.route.path}
-    exact
-  >
-    <StyledNavButton
-      disableElevation
-      startIcon={
-        props.route.title === 'Home' ? (
-          <HomeIcon />
-        ) : props.route.title === 'Docs' ? (
-          <DocsIcon />
-        ) : props.route.title === 'Tutorial' ? (
-          <TutorialIcon />
-        ) : null
-      }
-    >
-      {props.route.title}
-    </StyledNavButton>
-  </NavLink>
-);
+}) => {
+  const { route, classes } = props;
+
+  const NavIcon = () =>
+    route.title === 'Home' ? (
+      <HomeIcon />
+    ) : route.title === 'Docs' ? (
+      <DocsIcon />
+    ) : route.title === 'Tutorial' ? (
+      <TutorialIcon />
+    ) : route.title === 'Github' ? (
+      <GithubIcon />
+    ) : null;
+
+  if (route.component()) {
+    return (
+      <NavLink
+        activeClassName={classes.activeNavButton}
+        className={classes.navLink}
+        to={route.path}
+        exact
+      >
+        <StyledNavButton fullWidth disableElevation startIcon={<NavIcon />}>
+          {route.title}
+        </StyledNavButton>
+      </NavLink>
+    );
+  } else {
+    return (
+      <a
+        href={route.path}
+        className={classes.navLink}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <StyledNavButton fullWidth disableElevation startIcon={<NavIcon />}>
+          {route.title}
+        </StyledNavButton>
+      </a>
+    );
+  }
+};
 
 const MainNavigation = () => {
   const classes = useStyles();
