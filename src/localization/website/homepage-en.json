@@ -1,0 +1,36 @@
+{
+  "pageTitle": "Cool React",
+  "pageSubtitle": "Cool component and hook based library for your react app.",
+  "getStartedBtn": "Get Started",
+  "goToDocumentaionBtn": "Documentation",
+  "featuresTitle": "Features",
+  "featureItems": {
+    "apiItem": {
+      "title": "Simple API",
+      "subtitle_1": "API is build so that it is easy to understand and simple to use, so you can start developing as fast, as possible."
+    },
+    "fastItem": {
+      "title": "Fast",
+      "subtitle_1": "Size matters. That's why our library use almost none of third-party dependencies in build."
+    },
+    "seoItem": {
+      "title": "SEO",
+      "subtitle_1": "If you know how Single Page Applications works, then you probably know that they are not quite SEO friendly.",
+      "subtitle_2": "With our library you can easy manage your head, html and body elements."
+    },
+    "fetchItem": {
+      "title": "Fetching",
+      "subtitle_1": "Fetching data from your server can be awful sometimes, because some methods are not friendly in using while others are outdated and unmanageable.",
+      "subtitle_2": "Our fetch hook is based on Fetch API and with power of react hooks it let's you write async code in sync style with bunch of other features."
+    },
+    "storeItem": {
+      "title": "Fetching",
+      "subtitle_1": "We wanted to make store that is flexible, scalable and configurable."
+    },
+    "formItem": {
+      "title": "Forms",
+      "subtitle_1": "Form validation can become a mess, especially when they are big.",
+      "subtitle_2": "Our library provide tools for handling different types of validation, so you can code less on focus more on your logic."
+    }
+  }
+}

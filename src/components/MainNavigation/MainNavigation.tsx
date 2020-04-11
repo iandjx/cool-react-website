@@ -17,7 +17,7 @@ import TutorialIcon from '@material-ui/icons/School';
 import GithubIcon from '@material-ui/icons/GitHub';
 import DocsIcon from '@material-ui/icons/Description';
 import Avatar from '@material-ui/core/Avatar';
-import navPaths, { navPathType } from './navPaths';
+import navPaths, { NavPathType } from './navPaths';
 
 const useStyles = makeStyles((theme: AugmentedTheme) =>
   createStyles({
@@ -32,6 +32,11 @@ const useStyles = makeStyles((theme: AugmentedTheme) =>
       [theme.breakpoints.down('sm')]: {
         display: 'none',
       },
+    },
+    titleTag: {
+      color: theme.colors.textColors.light,
+      fontSize: 'small',
+      marginLeft: theme.spacing(1),
     },
     navLinksGroup: {
       margin: theme.spacing(2),
@@ -113,7 +118,7 @@ const StyledNavButton = withStyles((theme: AugmentedTheme) => ({
 }))(Button);
 
 const MainNanLink = (props: {
-  route: navPathType;
+  route: NavPathType;
   classes: Record<string, string>;
 }) => {
   const { route, classes } = props;
@@ -125,46 +130,31 @@ const MainNanLink = (props: {
       <DocsIcon />
     ) : route.title === 'Tutorial' ? (
       <TutorialIcon />
-    ) : route.title === 'Github' ? (
-      <GithubIcon />
     ) : null;
 
-  if (route.component) {
-    return (
-      <NavLink
-        activeClassName={classes.activeNavButton}
-        className={classes.navLink}
-        to={route.path}
-        exact
-      >
-        <StyledNavButton fullWidth disableElevation startIcon={<NavIcon />}>
-          {route.title}
-        </StyledNavButton>
-      </NavLink>
-    );
-  } else {
-    return (
-      <a
-        href={route.path}
-        className={classes.navLink}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        <StyledNavButton fullWidth disableElevation startIcon={<NavIcon />}>
-          {route.title}
-        </StyledNavButton>
-      </a>
-    );
-  }
+  return (
+    <NavLink
+      activeClassName={classes.activeNavButton}
+      className={classes.navLink}
+      to={route.path}
+      exact
+    >
+      <StyledNavButton fullWidth disableElevation startIcon={<NavIcon />}>
+        {route.title}
+      </StyledNavButton>
+    </NavLink>
+  );
 };
 
 const MainNavigation = () => {
+
   const classes = useStyles();
+  const routes = navPaths();
 
   return (
     <AppBar className={classes.grow} elevation={1}>
       <Toolbar>
-        <Link to={navPaths.home.path} className={classes.bigHomeLink}>
+        <Link to={routes.home.path} className={classes.bigHomeLink}>
           <Avatar
             src="../images/cool-react.png"
             alt=""
@@ -177,12 +167,27 @@ const MainNavigation = () => {
             noWrap
           >
             CoolReact
+            <small className={classes.titleTag}>alpha</small>
           </Typography>
         </Link>
         <div className={classes.navLinksGroup}>
-          {Object.keys(navPaths).map(key => (
-            <MainNanLink key={key} route={navPaths[key]} classes={classes} />
+          {Object.keys(routes).map(key => (
+            <MainNanLink key={key} route={routes[key]} classes={classes} />
           ))}
+          <a
+            href="https://github.com/smashboy/cool-react"
+            className={classes.navLink}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <StyledNavButton
+              fullWidth
+              disableElevation
+              startIcon={<GithubIcon />}
+            >
+              Github
+            </StyledNavButton>
+          </a>
         </div>
         <div className={classes.search}>
           <div className={classes.searchIcon}>
