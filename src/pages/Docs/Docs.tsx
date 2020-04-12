@@ -1,38 +1,32 @@
 import React from 'react';
-import { Switch, Route, RouteComponentProps } from 'react-router-dom';
-import { NavPathType } from '../../components/MainNavigation/navPaths';
+import { Route, RouteComponentProps } from 'react-router-dom';
+import { docsRoutes } from '../../components/MainNavigation/navRoutes';
 import SideNavigataion from '../../components/MainNavigation/SideNavigation';
 
-interface DocsPropsType extends RouteComponentProps {
-  routes?: NavPathType[];
-};
-
-const Docs = (props: DocsPropsType) => {
-  const { routes, match } = props;
-
-  console.log(routes);
+const Docs = (props: RouteComponentProps) => {
+  const { match } = props;
 
   return (
     <React.Fragment>
-      <SideNavigataion parentPath={match.path} routes={routes} />
-      {routes ? (
-        routes.map((route, index) => {
-          const Component = route.component;
+      <SideNavigataion parentPath={match.path} routes={docsRoutes} />
+      {docsRoutes.map((route, index) => {
+        const Component = route.component;
 
-          return (
-            <Route
-              path={`${match.path}${route.path}`}
-              exact
-              key={index}
-              component={(props: any) => (
-                <Component {...props} routes={route.routes} />
-              )}
-            />
-          );
-        })
-      ) : (
-        <h1>gavno</h1>
-      )}
+        return (
+          <Route
+            path={`${match.path}${route.path}`}
+            key={index}
+            component={(props: RouteComponentProps) => (
+              <Component
+                {...props}
+                parentPath={`${match.path}${route.path}`}
+                title={route.title}
+                routes={route.routes}
+              />
+            )}
+          />
+        );
+      })}
     </React.Fragment>
   );
 };

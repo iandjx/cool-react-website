@@ -9,22 +9,22 @@ import Drawer from '@material-ui/core/Drawer';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import IconButton from '@material-ui/core/IconButton';
 import Divider from '@material-ui/core/Divider';
-import { NavPathType } from './navPaths';
+import { NavRouteType } from './navRoutes';
 import TreeView from '@material-ui/lab/TreeView';
 import TreeItem from '@material-ui/lab/TreeItem';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 
-const drawerWidth = 240;
-
 const useStyles = makeStyles((theme: AugmentedTheme) =>
   createStyles({
     drawer: {
-      width: drawerWidth,
+      width: theme.sideBarWidth,
+      maxWidth: theme.sideBarWidth,
       flexShrink: 0,
     },
     drawerPaper: {
-      width: drawerWidth,
+      width: theme.sideBarWidth,
+      maxWidth: theme.sideBarWidth,
     },
     drawerHeader: {
       display: 'flex',
@@ -34,27 +34,72 @@ const useStyles = makeStyles((theme: AugmentedTheme) =>
       ...theme.mixins.toolbar,
       justifyContent: 'flex-end',
     },
+    navLink: {
+      textDecoration: 'none',
+      color: theme.colors.textColors.light,
+      fontWeight: 500,
+    },
+    navLinkActive: {
+      color: theme.colors.textColors.brand,
+    },
+    treeItemLabel: {
+      backgroundColor: 'transparent',
+      '&:hover': {
+        backgroundColor: 'transparent',
+      },
+      '&:focus': {
+        backgroundColor: 'transparent',
+      },
+    },
   })
 );
 
-const mapSubRoutes = (routes: NavPathType[], parentPath: string) => {
+const mapSubRoutes = (
+  routes: NavRouteType[],
+  parentPath: string,
+  classes: Record<string, string>
+) => {
   return routes.map((route, index) => (
     <React.Fragment key={index}>
       {route.routes ? (
-        <TreeItem nodeId={`${index}`} label={route.title}>
-          {mapSubRoutes(route.routes, parentPath)}
+        <TreeItem
+          nodeId={route.path}
+          classes={{ label: classes.treeItemLabel }}
+          label={
+            <NavLink
+              className={classes.navLink}
+              activeClassName={classes.navLinkActive}
+              to={`${parentPath}${route.path}`}
+              exact
+            >
+              {route.title}
+            </NavLink>
+          }
+        >
+          {mapSubRoutes(route.routes, `${parentPath}${route.path}`, classes)}
         </TreeItem>
       ) : (
-        <NavLink to={`${parentPath}${route.path}`} exact>
-          <TreeItem nodeId={`${index}`} label={route.title} />
-        </NavLink>
+        <TreeItem
+          nodeId={route.path}
+          classes={{ label: classes.treeItemLabel }}
+          label={
+            <NavLink
+              className={classes.navLink}
+              activeClassName={classes.navLinkActive}
+              to={`${parentPath}${route.path}`}
+              exact
+            >
+              {route.title}
+            </NavLink>
+          }
+        />
       )}
     </React.Fragment>
   ));
 };
 
 type SideNavigationPropsType = {
-  routes: NavPathType[] | undefined;
+  routes: NavRouteType[] | undefined;
   parentPath: string;
 };
 
@@ -69,6 +114,9 @@ const SideNavigation = (props: SideNavigationPropsType) => {
       className={classes.drawer}
       variant="persistent"
       anchor="left"
+      classes={{
+        paper: classes.drawerPaper,
+      }}
     >
       <div className={classes.drawerHeader}>
         <IconButton>
@@ -80,8 +128,9 @@ const SideNavigation = (props: SideNavigationPropsType) => {
         <TreeView
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ChevronRightIcon />}
+          expanded={routes.map(route => route.path)}
         >
-          {mapSubRoutes(routes, parentPath)}
+          {mapSubRoutes(routes, parentPath, classes)}
         </TreeView>
       ) : null}
     </Drawer>

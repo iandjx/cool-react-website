@@ -17,7 +17,7 @@ import TutorialIcon from '@material-ui/icons/School';
 import GithubIcon from '@material-ui/icons/GitHub';
 import DocsIcon from '@material-ui/icons/Description';
 import Avatar from '@material-ui/core/Avatar';
-import navPaths, { NavPathType } from './navPaths';
+import { NavRouteType, mainNavRoutes } from './navRoutes';
 
 const useStyles = makeStyles((theme: AugmentedTheme) =>
   createStyles({
@@ -118,7 +118,7 @@ const StyledNavButton = withStyles((theme: AugmentedTheme) => ({
 }))(Button);
 
 const MainNanLink = (props: {
-  route: NavPathType;
+  route: NavRouteType;
   classes: Record<string, string>;
 }) => {
   const { route, classes } = props;
@@ -137,7 +137,7 @@ const MainNanLink = (props: {
       activeClassName={classes.activeNavButton}
       className={classes.navLink}
       to={route.path}
-      exact
+      exact={route.path === '/' ? true : false}
     >
       <StyledNavButton fullWidth disableElevation startIcon={<NavIcon />}>
         {route.title}
@@ -147,14 +147,12 @@ const MainNanLink = (props: {
 };
 
 const MainNavigation = () => {
-
   const classes = useStyles();
-  const routes = navPaths();
 
   return (
     <AppBar className={classes.grow} elevation={1}>
       <Toolbar>
-        <Link to={routes.home.path} className={classes.bigHomeLink}>
+        <Link to={mainNavRoutes[0].path} className={classes.bigHomeLink}>
           <Avatar
             src="../images/cool-react.png"
             alt=""
@@ -171,8 +169,8 @@ const MainNavigation = () => {
           </Typography>
         </Link>
         <div className={classes.navLinksGroup}>
-          {Object.keys(routes).map(key => (
-            <MainNanLink key={key} route={routes[key]} classes={classes} />
+          {mainNavRoutes.map((route, index) => (
+            <MainNanLink key={index} route={route} classes={classes} />
           ))}
           <a
             href="https://github.com/smashboy/cool-react"

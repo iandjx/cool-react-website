@@ -1,35 +1,27 @@
 import React from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom';
-import navPaths from './components/MainNavigation/navPaths';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { mainNavRoutes } from './components/MainNavigation/navRoutes';
 import MainNavigation from './components/MainNavigation/MainNavigation';
 import defaultTheme from './theme/theme';
 import PageLoader from './components/PageLoader/PageLoader';
 
 const App = () => {
-  const routePaths = navPaths();
-
   return (
     <ThemeProvider theme={defaultTheme}>
       <Router>
         <MainNavigation />
         <React.Suspense fallback={<PageLoader />}>
           <Switch>
-            {Object.keys(routePaths).map((key, index) => {
-              const Component = routePaths[key].component;
+            {mainNavRoutes.map((route, index) => {
+              const Component = route.component;
 
               return (
                 <Route
-                  path={routePaths[key].path}
-                  exact={routePaths[key].path === '/' ? true : false}
+                  path={route.path}
+                  exact={route.path === '/' ? true : false}
                   key={index}
-                  component={(props: any) => (
-                    <Component {...props} routes={routePaths[key].routes} />
-                  )}
+                  component={Component}
                 />
               );
             })}
